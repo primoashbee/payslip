@@ -13,8 +13,25 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    You are logged in!
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                    <form action="{{route('upload.payroll')}}" enctype="multipart/form-data" method="POST">
+                        @csrf
+                        <p class="float-right"> Download template  <a href="{{route('download.template')}}">Here </a></p>
+                        <div class="form-group">
+                          <label for="uploadFile">Upload template</label>
+                          <input type="file" class="form-control-file" id="uploadFile" name="uploadFile" accept=".xlsx" required>
+                        </div>
+                        
+                        <input type="submit" class="btn btn-success">
+                    </form>
                 </div>
             </div>
         </div>
