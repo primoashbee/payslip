@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Storage;
 class UploadController extends Controller
 {
     public function downloadTemplate(){
+        $headers = array(
+            'Content-Type: application/pdf',
+          );
         return response()->download(public_path('Template.xlsx'));
     }
 

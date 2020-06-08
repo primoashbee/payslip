@@ -132,7 +132,7 @@ class Payroll extends Model
         return $this->format(number_format($value,2));
     }
 
-    public function getCoopLoanAttribute($value){
+    public function getCoopLoansAttribute($value){
         return $this->format(number_format($value,2));
     }
 
@@ -152,7 +152,10 @@ class Payroll extends Model
         return $this->format(number_format($value,2));
     }
 
-    public function getNeyPayAttribute($value){
+    public function getNetPayAttribute($value){
+        return $this->format(number_format($value,2));
+    }
+    public function getOtherAdditionsAmountAttribute($value){
         return $this->format(number_format($value,2));
     }
 }

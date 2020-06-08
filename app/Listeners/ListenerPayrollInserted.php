@@ -21,164 +21,252 @@ class ListenerPayrollInserted implements ShouldQueue
      */
     public function handle($event)
     {
-        $signature = Storage::disk('public')->path('signature.pdf');
+        $logo = public_path('logo.png');
+        $signature = public_path('signature.png');
         $payslips = Payroll::where('batch_id', $event->batch_id)->get();
         
 
         foreach ($payslips as $key => $value) {
             $pdf = app()->make('dompdf.wrapper');    
             $pdf->loadHTML('
-                <html>
-                <head>
-                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-                </head>
-                <style>
-                    h3{
-                        margin: 0 0 0 0
-                    }
-                    tr.noBorder td {
-                        border: 0;
-                    }
-                </style>
-                <body>
-                <div class="container">
-                <h5>LIGHT Microfinance Incorporated</h5>
-                <h5>MAIN OFFICE</h5>
-                <h5>'.$value->applicable.'</h5>
-                    <p class="h4 font-weight-bolder text-center"> '.$value->name.' </p>
-                    <table class="table">
-                        <tbody>
-                        <tr style="border;none!important">
-                            <td class="text-left"><p>'.$value->position.'</p></td>
-                            <td class="text-right"><p>'.$value->employement.'</p></td>
-                        </tr>
-                        <tr>
-                            <td class="text-left"> <b>BASIC SALARY (Monthly)</b></td>
-                            <td class="text-right"> <b> '.$value->monthly_rate.'</b></td>
-                        </tr>
-                        
-                        <tr class="noBorder">
-                            <td class="text-left">Daily Rate</td>
-                            <td class="text-right">'.$value->monthly_rate.'</td>
-                        </tr>
-                        <tr>
-                            <td class="text-left"><b>ACTUAL NO. OF WEEK DAYS PAID</b></td>
-                            <td class="text-right"><b>'.$value->earned.'</b></td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">Less: Absences</td>
-                            <td class="text-right">'.$value->days_absent_amount.'</b></td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">Less: Tardiness</td>
-                            <td class="text-right">'.$value->mnutes_tardiness_amount.'</b></td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">Add/Less: Rate Adjustments</td>
-                            <td class="text-right">'.$value->retro.'</b></td>
-                        </tr>
-                        <tr>
-                            <td class="text-left"><b>GROSS COMPENSATION</b></td>
-                            <td class="text-right">'.$value->gross_compensation.'</b></td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">Add: Holiday Pay</td>
-                            <td class="text-right">'.$value->additional_holiday_amount.'</b></td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">Add: Overtime Pay</td>
-                            <td class="text-right">'.$value->overtime_amount.'</b></td>
-                        </tr>
-        
-        
-                        <tr>
-                            <td class="text-left"><b> TAXABLE COMPENSATION INCOME</b></td>
-                            <td class="text-right">'.$value->taxable_compensation.'</b></td>
-                        </tr>
-        
-                        <tr>
-                            <td class="text-left">ADD: OTHER ADJUSTMENTS</td>
-                            <td class="text-right">'.$value->additional_holiday_amount.'</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="text-left">EB: RICE SUBSIDY</td>
-                            <td class="text-right">'.$value->rice_subsidy.'</td>
-                        </tr>
-        
-                        <tr>
-                            <td class="text-left">ACCOUNTS PAYABLE</td>
-                            <td class="text-right">'.$value->account_payable.'</td>
-                        </tr>
-        
-                        <tr>
-                            <td class="text-left"><b> GROSS PAY</b></td>
-                            <td class="text-right">'.$value->gross_pay.'</b></td>
-                        </tr>
-        
-                        <tr>
-                            <td class="text-left"><b>LESS: DEDUCTIONS</b></td>
-                            <td class="text-right"></td>
-                        </tr>
-        
-                        <tr>
-                            <td class="text-left">A/P: Witholding Tax</td>
-                            <td class="text-right">'.$value->withholding_tax.'</td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">A/P: SSS Contribution</td>
-                            <td class="text-right">'.$value->sss_contribution.'</td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">A/P: PHIC Contribution</td>
-                            <td class="text-right">'.$value->phic_contribution.'</td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">A/P: HDMF Contribution</td>
-                            <td class="text-right">'.$value->hdmf_contribution.'</td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">A/P: Coop Share Capital</td>
-                            <td class="text-right">'.$value->coop_scc.'</td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">A/P: Coop Loans</td>
-                            <td class="text-right">'.$value->coop_loans.'</td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">A/P: SSS Loans</td>
-                            <td class="text-right">'.$value->sss_loan.'</td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">A/P: HDMF Loans</td>
-                            <td class="text-right">'.$value->hdmf_loan.'</td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">HDMF MP2</td>
-                            <td class="text-right">'.$value->hdmf_mp2.'</td>
-                        </tr>
-                        </tr>
-                        <tr>
-                            <td class="text-left">AR</td>
-                            <td class="text-right">'.$value->ar.'</td>
-                        </tr>
-                        <tr>
-                            <td class="text-left"><b>Total Deductions</b></td>
-                            <td class="text-right"><b>'.$value->total_deductions.'</b></td>
-                        </tr>
-                        <tr>
-                            <td class="text-left"><b>Net Pay</b></td>
-                            <td class="text-right"><b>'.$value->net_pay.'</b></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <p> Prepared By: </p>
-                    <img src="css/signature.png" style="max-width:150px;max-height:75px;margin-bottom:-50px">
-                    <p> Annalie D. Concepcion </p>
-                </div>
-                </body>
-                </html>
-            ');
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <title></title>
+                    </head>
+
+                    <style type="text/css">
+                        div.slip-container{
+                        max-width: 400px;
+                        width: 100%;
+                        border: 1px solid black;
+                        height: 1080px;
+                        border-style: dashed;
+                        }
+                        div.slip-body{
+                            display: flex;
+                        }
+                        div.slip-header{
+                            width: 100%;
+                            border-bottom: 2px solid black;
+                            border-bottom-style: dashed;
+                        }
+                        div.slip-footer{
+                            margin-top: -30px;
+                            margin-left: 5px;
+                        }
+                        .m-0{
+                            margin: 0;
+                            
+                        }
+                        .bb{
+                            border-bottom:1.5px solid black;
+                        }
+                        .mx-0{
+                            margin: auto 0;
+                        }
+                        .text-left{
+                            text-align: left;
+                        }
+                        .float-right{
+                            float: right;
+                        }
+                        .text-center{
+                            text-align: center;
+                        }
+                        .title{
+                            font-weight: 600;
+                        }
+                        .pt-10{
+                            padding-top: 10px;
+                        }
+                        table tbody tr td:nth-child(even){
+                            text-align: center;
+                        }
+                        table{
+                            width: 100%;
+                        }
+                    </style>
+                    <body>
+
+                        <div class="slip-container">
+                            <div class="slip-header">
+                                <img src="'.$logo.'" style="max-width:50%;max-height:50%;padding-bottom:-20px">
+                                <h4 class="mx-0">LIGHT Microfinance Incorporated</h4>
+                                <p class="mx-0">MAIN OFFICE</p>
+                                <p class="mx-0">'.$value->applicable.'</p>
+                                <h4 class="mx-0 text-center">'.$value->name.'</h4>
+                                <div>
+                                    <span class="text-left" style="margin-left:25px">'.$value->position.'</span>
+                                    <span class="float-right m0" style="margin-right:25px" >'.$value->employement.'</span>
+                                </div>
+                            </div>
+
+                            <div class="slip-body">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <p class="title m-0">Basic Salary (Monthly)</p>
+                                            </td>
+                                            <td>
+                                                <p class="title m-0" >'.$value->monthly_rate.'</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Daily Rate (Monthly)</td>
+                                            <td>'.$value->daily_rate.'</td>
+                                        </tr>
+                                        <tr>
+                                            <td>ACTUAL NO. OF WEEK DAYS PAID</td>
+                                            <td>'.$value->earned.'</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Less: Absences</td>
+                                            <td>'.$value->days_absent_amount.'</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Less: Tardiness</td>
+                                            <td>'.$value->minutes_tardiness_amount.'</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Add/Less: Rate Adjustments</td>
+                                            <td class="bb">'.$value->retro.'</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p class="title">GROSS COMPENSATION</p>
+                                            </td>
+                                            <td>
+                                                <p class="title">'.$value->gross_compensation.'</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Add: Holiday Pay
+                                            </td>
+                                            <td>
+                                            '.$value->additional_holiday_amount.'
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Add:Overtime Pay
+                                            </td>
+                                            <td class="bb">
+                                            '.$value->overtime_amount.'
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p class="title">TAXABLE COMPENSATION INCOME</p>
+                                            </td>
+                                            <td>
+                                                <p class="title">'.$value->taxable_compensation.'</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                ADD: OTHER ADJUSTMENTS
+                                            </td>
+                                            <td>
+                                                '.$value->other_additions_amount.'
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>EB: RICE SUBSIDY</td>
+                                            <td>'.$value->rice_subsidy.'</td>
+                                        </tr>
+                                        <tr>
+                                            <td>ACCOUNTS PAYABLE</td>
+                                            <td class="bb">'.$value->account_payable.'</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p class="title">GROSS PAY</p>
+                                            </td>	
+                                            <td>
+                                                <p class="title">'.$value->gross_pay.'</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <p class="title m-0">LESS: DEDUCTIONS</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>A/P: Withholding Tax</td>
+                                            <td>'.$value->withholding_tax.'</td>
+                                        </tr>
+                                        <tr>
+                                            <td>A/P: SSS Contribution</td>
+                                            <td>'.$value->sss_contribution.'</td>
+                                        </tr>
+                                        <tr>
+                                            <td>A/P: PHIC Contribution</td>
+                                            <td>'.$value->phic_contribution.'</td>
+                                        </tr>
+                                        <tr>
+                                            <td>A/P: HDMF Contribition</td>
+                                            <td>'.$value->hdmf_contribution.'</td>
+                                        </tr>
+                                        <tr>
+                                            <td>A/P: Coop Share Capital</td>
+                                            <td>'.$value->coop_scc.'</td>
+                                        </tr>
+                                        <tr>
+                                            <td>A/P: Coop Loans</td>
+                                            <td>'.$value->coop_loans.'</td>
+                                        </tr>
+                                        <tr>
+                                            <td>A/P: SSS Loans</td>
+                                            <td>'.$value->sss_loan.'</td>
+                                        </tr>
+                                        <tr>
+                                            <td>A/P: HDMF Loan</td>
+                                            <td>'.$value->hdmf_loan.'</td>
+                                        </tr>
+                                        <tr>
+                                            <td>A/P: HDMF(MP2)</td>
+                                            <td>'.$value->hdmf_mp2.'</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Account Receivable</td>
+                                            <td>'.$value->ar.'</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p class="title m-0">TOTAL DEDUCTIONS</p>
+                                            </td>
+                                            <td class="bb">
+                                                <p class="title m-0">'.$value->total_deductions.'</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p class="title">NET PAY</p>
+                                            </td>
+                                            <td>
+                                                <p class="title bb">'.$value->net_pay.'</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                        
+                                </table>
+                            </div>
+
+                            <div class="slip-footer">
+                                <h4 class="m0">Prepared by:</h4>
+                                <img src="'.$signature.'" style="max-width:50%;max-height:50%;padding-bottom:-20px">
+                                <p><b>Annalie D. Conception</b></p>
+                            </div>
+                        </div>
+
+                    </body>
+                    </html>'
+            );
+        $customPaper = array(0,0,360,900);
+            $pdf->setPaper($customPaper);
             $password = uniqid();
 
             $pdf->setEncryption($password);
@@ -186,9 +274,6 @@ class ListenerPayrollInserted implements ShouldQueue
             $pdf->save($filepath);
             
             Mail::to($value->email)->send(new SendPayslipMail($value,$filepath,$password));
-
-         
-
         }
     }
 }
