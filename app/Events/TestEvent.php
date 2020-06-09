@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class EventPayrollInserted
+class TestEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -19,12 +19,22 @@ class EventPayrollInserted
      *
      * @return void
      */
-    public $batch_id;
-    public function __construct($batch_id)
+    public $message;
+    public function __construct($message)
     {
-        
-        $this->batch_id = $batch_id;
-        
+        $this->message = $message;
     }
 
+    /**
+     * Get the channels the event should broadcast on.
+     *
+     * @return \Illuminate\Broadcasting\Channel|array
+     */
+    public function broadcastOn()
+    {
+        return 'channel-name';
+    }
+    public function broadcastAs(){
+        return 'test-event';
+    }
 }

@@ -108,7 +108,7 @@ class PayrollImport implements ToModel, WithHeadingRow,WithCalculatedFormulas, W
              'employee_name' => 'required',
              'title' => 'required',
              'status' => 'required',
-             'salary' => 'required|gte:0',
+             'salary' => 'required|gt:0',
              'days_worked' => 'required|gte:0',
              'earned' => 'required|gte:0',
              'days_absent' => 'sometimes|gte:0',
@@ -165,7 +165,7 @@ class PayrollImport implements ToModel, WithHeadingRow,WithCalculatedFormulas, W
             'employee_name.required' => 'Employee name is required',
             'title.required' => 'Employe position/title is required',
             'salary.required' => 'Monthly Salary is required',
-            'salary.gte' => 'Monthly Salary must be greater than or equal to 0',
+            'salary.gt' => 'Monthly Salary must be greater than 0',
 
             'days_worked.required' => 'Days work is required',
             'days_worked.gte' => 'Days work must be greater than or equal to 0',

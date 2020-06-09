@@ -30,6 +30,7 @@ class UploadController extends Controller
             Excel::import(new PayrollImport($batch_id), $request->file('uploadFile'));
             
             event(new EventPayrollInserted($batch_id));
+            return redirect()->back()->with('status','Successfully Uploaded. Payslips will be sent to the respective e-mails');
         }
     }
 }

@@ -4,7 +4,9 @@ namespace App\Listeners;
 
 use App\Payroll;
 use App\Mail\SendPayslipMail;
+use Illuminate\Support\Facades\Log;
 use App\Events\EventPayrollInserted;
+use App\Events\PayrollUploadSuccess;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Queue\InteractsWithQueue;
@@ -25,7 +27,8 @@ class ListenerPayrollInserted implements ShouldQueue
         $signature = public_path('signature.png');
         $payslips = Payroll::where('batch_id', $event->batch_id)->get();
         
-
+        $ctr=0;
+        $total = $payslips->count();
         foreach ($payslips as $key => $value) {
             $pdf = app()->make('dompdf.wrapper');    
             $pdf->loadHTML('
@@ -265,7 +268,7 @@ class ListenerPayrollInserted implements ShouldQueue
                     </body>
                     </html>'
             );
-        $customPaper = array(0,0,360,900);
+            $customPaper = array(0,0,360,900);
             $pdf->setPaper($customPaper);
             $password = uniqid();
 
@@ -274,6 +277,12 @@ class ListenerPayrollInserted implements ShouldQueue
             $pdf->save($filepath);
             
             Mail::to($value->email)->send(new SendPayslipMail($value,$filepath,$password));
+            $ctr++;
         }
+        
+        $msg = 'Succesffully sent email '.$ctr.' of '.$total.'.';
+        // $msg = 'Succesffully sent emails';
+        Log::info($msg);
+        event(new PayrollUploadSuccess($msg));
     }
 }

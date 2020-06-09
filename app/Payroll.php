@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Events\PayrollSendPayslip;
+use App\Mail\SendPayslipMail;
 use Illuminate\Database\Eloquent\Model;
 
 class Payroll extends Model
@@ -158,4 +160,16 @@ class Payroll extends Model
     public function getOtherAdditionsAmountAttribute($value){
         return $this->format(number_format($value,2));
     }
+
+    public static function batches(){
+        $me = new static;
+        return $me->select('batch_id','created_at','applicable')->distinct()->get();
+    }
+
+    public function sendToEmail(){
+        $payroll = $this;
+        event(new PayrollSendPayslip($payroll));
+    }
+
+
 }
