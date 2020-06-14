@@ -5,14 +5,24 @@
 </template>
 
 <script>
+import Pusher from 'pusher-js' // import Pusher
+
     export default {
         mounted() {
-            console.log('Component mounted.')
-            Swal.fire(
-                'Good job!',
-                'You clicked the button!',
-                'success'
-            )
+            this.subscribe()
+        },
+        methods: {
+            subscribe(){
+                let pusher = new Pusher('ada04ff58e3be4c984d2', { cluster: 'ap1' })
+                pusher.subscribe('channel-notifcations')
+                pusher.bind('event-notify', data => {
+                    Swal.fire(
+                        'E-Payslip Success',
+                        data.message,
+                        'success'
+                    )
+                })
+            }
         }
     }
 </script>

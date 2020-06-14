@@ -13,15 +13,15 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <form action="{{route('upload.payroll')}}" enctype="multipart/form-data" method="POST">
                         @csrf
                         <p> See Uploaded Information <a href="{{route('payroll.list')}}">here</a> </p>

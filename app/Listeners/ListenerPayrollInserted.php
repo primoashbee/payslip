@@ -21,8 +21,12 @@ class ListenerPayrollInserted implements ShouldQueue
      * @param  object  $event
      * @return void
      */
+    public $timeout=0;
+
     public function handle($event)
     {
+        
+        // set_time_limit(300);
         $logo = public_path('logo.png');
         $signature = public_path('signature.png');
         $payslips = Payroll::where('batch_id', $event->batch_id)->get();
@@ -270,10 +274,10 @@ class ListenerPayrollInserted implements ShouldQueue
             );
             $customPaper = array(0,0,360,900);
             $pdf->setPaper($customPaper);
-            $password = uniqid();
+            $password = str_shuffle(uniqid());
 
             $pdf->setEncryption($password);
-            $filepath = Storage::disk('public')->path($value->name.'.pdf');
+            $filepath = Storage::disk('public')->path($value->name.' - '.$value->applicable.' .pdf');
             $pdf->save($filepath);
             
             Mail::to($value->email)->send(new SendPayslipMail($value,$filepath,$password));
@@ -284,5 +288,9 @@ class ListenerPayrollInserted implements ShouldQueue
         // $msg = 'Succesffully sent emails';
         Log::info($msg);
         event(new PayrollUploadSuccess($msg));
+    }
+
+    public function failed(){
+        Log::info('failed sir');
     }
 }

@@ -14,13 +14,17 @@ class SendPayslipMail extends Mailable
     public $payroll;
     public $filepath;
     public $password;
-    
+
+    public $logo;
 
     public function __construct($payroll, $filepath,$password)
     {
         $this->payroll = $payroll;
         $this->filepath = $filepath;
         $this->password = $password;
+                
+        $this->logo =  public_path('logo.png');;
+        
     }
 
     /**

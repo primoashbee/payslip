@@ -53,7 +53,7 @@
                                     <a href="{{route('view.resend-payslip',$payroll->id)}}">
                                         <button class="btn btn-danger"><i class="fa fa-share" aria-hidden="true"></i></button>
                                     </a>
-                                    <a href="{{route('view.payslip',$payroll->id)}}">
+                                    <a href="{{route('view.payslip',$payroll->id)}}" target="_blank">
                                         <button class="btn btn-primary"><i class="fa  fa-file-pdf-o" aria-hidden="true"></i></button>
                                     </a>
                                 </td>

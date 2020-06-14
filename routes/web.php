@@ -1,10 +1,12 @@
 <?php
 
-use App\Events\PayrollUploadSuccess;
 use App\Payroll;
 use App\Mail\TestEmail;
 use App\Events\TestEvent;
 use App\Mail\SendPayslipMail;
+use App\Events\PayrollUploadSuccess;
+use App\Jobs\JobSendPayslip;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,16 +22,32 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     // dd(env('BROADCAST_DRIVER'));
-    Log::info('message');
-    //event(new PayrollUploadSuccess('sup niggas'));
-    //return redirect()->route('home');
+    // Log::info('message');
+    // event(new TestEvent('sup niggas'));
+    return redirect()->route('home');
 });
 
+Route::get('/mail',function(){
 
+   $payroll = Payroll::first();
+   return new SendPayslipMail($payroll,'heyy','ashbee',1);
+});
+
+Route::get('/get/logo',function(){
+    // Log::info('email read by '. $payroll_id);
+    $payroll_id = request()->get('id');
+    if($payroll_id!=null){
+        Log::info('hindi null: '.$payroll_id);
+    }
+    return response()->file(public_path('logo.png'));
+})->name('view.logo');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/home', 'UploadController@upload')->name('upload.payroll');
+// Route::post('/logo.png', function(Request $request){
+//     dd($request->all());
+// });
 Route::get('/dl', 'UploadController@downloadTemplate')->name('download.template');
 
 Route::get('/payrolls', 'PayrollController@list')->name('payroll.list');

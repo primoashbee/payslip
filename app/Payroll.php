@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\EventResendPayslip;
 use App\Events\PayrollSendPayslip;
 use App\Mail\SendPayslipMail;
 use Illuminate\Database\Eloquent\Model;
@@ -168,7 +169,9 @@ class Payroll extends Model
 
     public function sendToEmail(){
         $payroll = $this;
-        event(new PayrollSendPayslip($payroll));
+        
+        event(new EventResendPayslip($payroll));
+        
     }
 
 

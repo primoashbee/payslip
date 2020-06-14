@@ -9,33 +9,31 @@ use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
+use Maatwebsite\Excel\Concerns\WithMappedCells;
 
 class PayrollImport implements ToModel, WithHeadingRow,WithCalculatedFormulas, WithValidation
 {
     use Importable;
 
-
-    /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
     public $start_date;
     public $end_date;
     public $ctr = 0;
     public $batch_id;
+
     public function __construct($batch_id){
         $this->batch_id = $batch_id;
     }
+
     public function model(array $row)
     {
         
         if($this->ctr == 0){
+            
             $this->start_date = Carbon::parse(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['start_date']));
-            $this->end_date = Carbon::parse(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['cuf_off_date']));
+            $this->end_date = Carbon::parse(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['end_date']));
             
         }
-
+        
         $this->ctr++;
         
         return new Payroll([

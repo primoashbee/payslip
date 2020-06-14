@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Events\EventPayrollInserted;
+use App\Events\EventResendPayslip;
 use App\Events\PayrollSendPayslip;
 use App\Listeners\ListenerPayrollInserted;
+use App\Listeners\ListenerResendPayslip;
 use App\Listeners\PayrollSendPayslipListen;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -24,6 +26,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         PayrollSendPayslip::class => [
             PayrollSendPayslipListen::class,
+        ],
+        EventResendPayslip::class => [
+            ListenerResendPayslip::class,
         ]
     ];
 

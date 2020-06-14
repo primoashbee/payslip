@@ -65,6 +65,7 @@ class CreatePayrollsTable extends Migration
             $table->date('start_date')->nullable();
             $table->date('cut_off_date')->nullable();
             $table->string('batch_id');
+            $table->date('seen_at')->nullable();
             $table->timestamps();   
         });
     }

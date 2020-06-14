@@ -1,27 +1,35 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Listeners;
 
-use App\Payroll;
-use Illuminate\Http\Request;
+use App\Mail\SendPayslipMail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class PayrollController extends Controller
+class ListenerResendPayslip implements ShouldQueue
 {
-    
-
-    public function list(){
-        $payrolls = Payroll::batches();
-
-        return view('payrolls',compact('payrolls'));
+    /**
+     * Create the event listener.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //
     }
-    public function listByBatchId($batch_id){
-        $payrolls = Payroll::where('batch_id',$batch_id)->get();
 
-        return view('payroll-list',compact('payrolls'));
-    }
-    public function viewPayroll($payroll_id){
+    /**
+     * Handle the event.
+     *
+     * @param  object  $event
+     * @return void
+     */
+    public function handle($event)
+    {
         $logo = public_path('logo.png');
-        $value = Payroll::find($payroll_id);
+        $value = $event->payroll;
         $signature = public_path('signature.png');  
         $pdf = app()->make('dompdf.wrapper');    
         $pdf->loadHTML('
@@ -263,19 +271,13 @@ class PayrollController extends Controller
         );
         $customPaper = array(0,0,360,900);
         $pdf->setPaper($customPaper);
-        return $pdf->stream();
+        $password = uniqid();
 
+        $pdf->setEncryption($password);
+        $filepath = Storage::disk('public')->path('PAYSLIP - '.$value->name.' - '.$value->applicable.' .pdf');
+        
+        $pdf->save($filepath);
+        Mail::to($value->email)->send(new SendPayslipMail($value,$filepath,$password));
+        
     }
-    
-    public function resendPayroll($payroll_id){
-
-        $payslip = Payroll::find($payroll_id);
-
-        $payslip->sendToEmail();
-
-        return redirect()->back()->with('status','Payslip succesfully sent to '. $payslip->email);
-
-    }
-
-    
 }

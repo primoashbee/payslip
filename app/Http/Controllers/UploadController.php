@@ -26,6 +26,8 @@ class UploadController extends Controller
             'uploadFile.mimes' => 'Invalid file type.',
         ]); 
         if($request->hasFile('uploadFile')){
+            
+
             $batch_id = uniqid();
             Excel::import(new PayrollImport($batch_id), $request->file('uploadFile'));
             
