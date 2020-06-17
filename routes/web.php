@@ -27,6 +27,10 @@ Route::get('/', function () {
     return redirect()->route('home');
 });
 
+Route::get('/ashbee',function(){
+    echo 'pogi si ashbee';
+});
+
 Route::get('/mail',function(){
 
    $payroll = Payroll::first();
