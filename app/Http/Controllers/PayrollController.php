@@ -22,13 +22,13 @@ class PayrollController extends Controller
     public function viewPayroll($payroll_id){
         $logo = public_path('logo.png');
         $value = Payroll::find($payroll_id);
-        $signature = public_path('signature.png');  
+        $signature = public_path('signature.png');
         $pdf = app()->make('dompdf.wrapper');    
         $pdf->loadHTML('
                 <!DOCTYPE html>
                 <html>
                 <head>
-                    <title></title>
+                    <title>'.$value->name.' - '.$value->applicable.'</title>
                 </head>
 
                 <style type="text/css">

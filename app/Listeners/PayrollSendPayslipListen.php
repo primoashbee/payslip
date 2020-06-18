@@ -21,7 +21,7 @@ class PayrollSendPayslipListen implements ShouldQueue
                 <!DOCTYPE html>
                 <html>
                 <head>
-                    <title></title>
+                    <title>'.$value->name.' - '.$value->applicable.'</title>
                 </head>
 
                 <style type="text/css">
