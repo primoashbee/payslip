@@ -87,7 +87,7 @@ class PayrollController extends Controller
 
                     <div class="slip-container">
                         <div class="slip-header">
-                            <img src="'.$logo.'" style="max-width:50%;max-height:50%;padding-bottom:-20px">
+                            <img src="'.$logo.'" style="max-width:50%;max-height:50%">
                             <h4 class="mx-0">LIGHT Microfinance Incorporated</h4>
                             <p class="mx-0">MAIN OFFICE</p>
                             <p class="mx-0">'.$value->applicable.'</p>
@@ -277,5 +277,6 @@ class PayrollController extends Controller
 
     }
 
+  
     
 }
