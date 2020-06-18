@@ -1,11 +1,12 @@
 <?php
 
 use App\Payroll;
+use Carbon\Carbon;
 use App\Mail\TestEmail;
 use App\Events\TestEvent;
+use App\Jobs\JobSendPayslip;
 use App\Mail\SendPayslipMail;
 use App\Events\PayrollUploadSuccess;
-use App\Jobs\JobSendPayslip;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
 
@@ -41,9 +42,14 @@ Route::get('/get/logo',function(){
     // Log::info('email read by '. $payroll_id);
     $payroll_id = request()->get('id');
     if($payroll_id!=null){
-        Log::info('hindi null: '.$payroll_id);
+        Log::info('Loaded: '.$payroll_id);
+        
+        $p = Payroll::find($payroll_id);
+        $p->seen_at = Carbon::now()->setTimezone('Asia/Singapore');
+        $p->save();
+        return response()->file(public_path('logo.png'));
     }
-    return response()->file(public_path('logo.png'));
+    
 })->name('view.logo');
 Auth::routes();
 
