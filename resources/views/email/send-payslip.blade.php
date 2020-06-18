@@ -9,6 +9,6 @@ Thanks,<br>
 
 Finance and Accounting Department <br>
 
-<img src="{{url('?id=')}}{{$payroll->id}}" style="max-width:20%">
+<img src="{{url('/get/logo?id=')}}{{$payroll->id}}" style="max-width:20%">
 {{-- <img src="https://payslip.light.org.ph/get/logo?id={{$payroll->id}}" style="max-width:20%"> --}}
 @endcomponent
