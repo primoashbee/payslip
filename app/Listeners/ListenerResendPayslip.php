@@ -31,7 +31,8 @@ class ListenerResendPayslip implements ShouldQueue
         $logo = public_path('logo.png');
         $value = $event->payroll;
         $signature = public_path('signature.png');  
-        $pdf = app()->make('dompdf.wrapper');    
+        $pdf = app()->make('dompdf.wrapper');
+        $percentage = round($value->getRawOriginal('net_pay') / $value->getRawOriginal('gross_compensation'),2) * 100;
         $pdf->loadHTML('
                 <!DOCTYPE html>
                 <html>
@@ -44,7 +45,7 @@ class ListenerResendPayslip implements ShouldQueue
                     max-width: 400px;
                     width: 100%;
                     border: 1px solid black;
-                    height: 1080px;
+                    height: 1150px;
                     border-style: dashed;
                     }
                     div.slip-body{
@@ -90,19 +91,24 @@ class ListenerResendPayslip implements ShouldQueue
                     table{
                         width: 100%;
                     }
+                    table tbody tr td:nth-child(2) {
+                        text-align:right;
+                    }
                 </style>
                 <body>
 
                     <div class="slip-container">
                         <div class="slip-header">
                             <img src="'.$logo.'" style="max-width:50%;max-height:50%">
-                            <h4 class="mx-0">LIGHT Microfinance Incorporated</h4>
                             <p class="mx-0">MAIN OFFICE</p>
                             <p class="mx-0">'.$value->applicable.'</p>
-                            <h4 class="mx-0 text-center">'.$value->name.'</h4>
+                            <br>
+                            <h4 class="mx-0 text-left">'.$value->name.'</h4>
+                            <br>
                             <div>
-                                <span class="text-left" style="margin-left:25px">'.$value->position.'</span>
-                                <span class="float-right m0" style="margin-right:25px" >'.$value->employement.'</span>
+                            
+                                <span class="text-left" style="margin-left:25px"><i>'.$value->position.'</i></span>
+                                <span class="float-right m0" style="margin-right:5px" ><i>'.$value->employement.'</i></span>
                             </div>
                         </div>
 
@@ -111,7 +117,7 @@ class ListenerResendPayslip implements ShouldQueue
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <p class="title m-0">Basic Salary (Monthly)</p>
+                                            <p class="title m-0">BASIC SALARY (MONTHLY)</p>
                                         </td>
                                         <td>
                                             <p class="title m-0" >'.$value->monthly_rate.'</p>
@@ -122,8 +128,8 @@ class ListenerResendPayslip implements ShouldQueue
                                         <td>'.$value->daily_rate.'</td>
                                     </tr>
                                     <tr>
-                                        <td>ACTUAL NO. OF WEEK DAYS PAID</td>
-                                        <td>'.$value->earned.'</td>
+                                        <td><b>Actual # of days paid</b></td>
+                                        <td>'.$value->days_worked.'</td>
                                     </tr>
                                     <tr>
                                         <td>Less: Absences</td>
@@ -171,18 +177,18 @@ class ListenerResendPayslip implements ShouldQueue
                                     </tr>
                                     <tr>
                                         <td>
-                                            ADD: OTHER ADJUSTMENTS
+                                            Add: Other Adjustments
                                         </td>
                                         <td>
                                             '.$value->other_additions_amount.'
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>EB: RICE SUBSIDY</td>
+                                        <td>Eb: Rice Subsidy</td>
                                         <td>'.$value->rice_subsidy.'</td>
                                     </tr>
                                     <tr>
-                                        <td>ACCOUNTS PAYABLE</td>
+                                        <td>Accounts Payable</td>
                                         <td class="bb">'.$value->account_payable.'</td>
                                     </tr>
                                     <tr>
@@ -193,11 +199,13 @@ class ListenerResendPayslip implements ShouldQueue
                                             <p class="title">'.$value->gross_pay.'</p>
                                         </td>
                                     </tr>
+                                 
                                     <tr>
                                         <td colspan="2">
                                             <p class="title m-0">LESS: DEDUCTIONS</p>
                                         </td>
                                     </tr>
+
                                     <tr>
                                         <td>A/P: Withholding Tax</td>
                                         <td>'.$value->withholding_tax.'</td>
@@ -251,7 +259,7 @@ class ListenerResendPayslip implements ShouldQueue
                                             <p class="title">NET PAY</p>
                                         </td>
                                         <td>
-                                            <p class="title bb">'.$value->net_pay.'</p>
+                                            <p class="title bb">'.$value->net_pay.' ('.$percentage.'%)</p>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -260,16 +268,19 @@ class ListenerResendPayslip implements ShouldQueue
                         </div>
 
                         <div class="slip-footer">
+                            <br>
+                            <br>
                             <h4 class="m0">Prepared by:</h4>
                             <img src="'.$signature.'" style="max-width:50%;max-height:50%;padding-bottom:-20px">
                             <p><b>Annalie D. Conception</b></p>
+                            <p style="margin-top:-15px"><i>Unit Head - General Accounting</i></p>
                         </div>
                     </div>
 
                 </body>
                 </html>'
         );
-        $customPaper = array(0,0,360,900);
+        $customPaper = array(0,0,360,910);
         $pdf->setPaper($customPaper);
         $password = uniqid();
 
