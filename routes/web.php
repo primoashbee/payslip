@@ -33,7 +33,6 @@ Route::get('/ashbee',function(){
 });
 
 Route::get('/mail',function(){
-
    $payroll = Payroll::first();
    return new SendPayslipMail($payroll,'heyy','ashbee',1);
 });

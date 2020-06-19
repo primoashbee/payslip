@@ -22,7 +22,7 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
+    use lister;
 
     /**
      * Where to redirect users after registration.
@@ -38,7 +38,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('is_admin');
     }
 
     /**

@@ -48,7 +48,7 @@ class ListenerPayrollInserted implements ShouldQueue
                     max-width: 400px;
                     width: 100%;
                     border: 1px solid black;
-                    height: 1080px;
+                    height: 1150px;
                     border-style: dashed;
                     }
                     div.slip-body{
@@ -94,6 +94,9 @@ class ListenerPayrollInserted implements ShouldQueue
                     table{
                         width: 100%;
                     }
+                    table tbody tr td:nth-child(2) {
+                        text-align:right;
+                    }
                 </style>
                 <body>
 
@@ -107,8 +110,8 @@ class ListenerPayrollInserted implements ShouldQueue
                             <br>
                             <div>
                             
-                                <span class="text-left" style="margin-left:25px">'.$value->position.'</span>
-                                <span class="float-right m0" style="margin-right:25px" >'.$value->employement.'</span>
+                                <span class="text-left" style="margin-left:25px"><i>'.$value->position.'</i></span>
+                                <span class="float-right m0" style="margin-right:5px" ><i>'.$value->employement.'</i></span>
                             </div>
                         </div>
 
@@ -128,7 +131,7 @@ class ListenerPayrollInserted implements ShouldQueue
                                         <td>'.$value->daily_rate.'</td>
                                     </tr>
                                     <tr>
-                                        <td>Actual # of days paid</td>
+                                        <td><b>Actual # of days paid</b></td>
                                         <td>'.$value->days_worked.'</td>
                                     </tr>
                                     <tr>
@@ -199,11 +202,13 @@ class ListenerPayrollInserted implements ShouldQueue
                                             <p class="title">'.$value->gross_pay.'</p>
                                         </td>
                                     </tr>
+                                
                                     <tr>
                                         <td colspan="2">
                                             <p class="title m-0">LESS: DEDUCTIONS</p>
                                         </td>
                                     </tr>
+
                                     <tr>
                                         <td>A/P: Withholding Tax</td>
                                         <td>'.$value->withholding_tax.'</td>
@@ -266,16 +271,19 @@ class ListenerPayrollInserted implements ShouldQueue
                         </div>
 
                         <div class="slip-footer">
+                            <br>
+                            <br>
                             <h4 class="m0">Prepared by:</h4>
                             <img src="'.$signature.'" style="max-width:50%;max-height:50%;padding-bottom:-20px">
                             <p><b>Annalie D. Conception</b></p>
+                            <p style="margin-top:-15px"><i>Unit Head - General Accounting</i></p>
                         </div>
                     </div>
 
                 </body>
                 </html>'
-            );
-            $customPaper = array(0,0,360,90);
+        );
+            $customPaper = array(0,0,360,950);
             $pdf->setPaper($customPaper);
             $password = str_shuffle(uniqid());
 

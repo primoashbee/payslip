@@ -280,7 +280,7 @@ class ListenerResendPayslip implements ShouldQueue
                 </body>
                 </html>'
         );
-        $customPaper = array(0,0,360,910);
+        $customPaper = array(0,0,360,950);
         $pdf->setPaper($customPaper);
         $password = uniqid();
 
