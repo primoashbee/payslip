@@ -288,11 +288,13 @@ class ListenerPayrollInserted implements ShouldQueue
             $password = str_shuffle(uniqid());
 
             $pdf->setEncryption($password);
+            $name = $value->name.' - '.$value->applicable.'.pdf';
             $filepath = Storage::disk('public')->path($value->name.' - '.$value->applicable.' .pdf');
             $pdf->save($filepath);
             
             Mail::to($value->email)->send(new SendPayslipMail($value,$filepath,$password));
             $ctr++;
+            Storage::disk('public')->delete($name);
         }
         
         $msg = 'Succesffully sent email '.$ctr.' of '.$total.'.';

@@ -285,10 +285,12 @@ class ListenerResendPayslip implements ShouldQueue
         $password = uniqid();
 
         $pdf->setEncryption($password);
-        $filepath = Storage::disk('public')->path('PAYSLIP - '.$value->name.' - '.$value->applicable.' .pdf');
+        $name = 'PAYSLIP - '.$value->name.' - '.$value->applicable.'.pdf';
+        $filepath = Storage::disk('public')->path($name);
         
         $pdf->save($filepath);
         Mail::to($value->email)->send(new SendPayslipMail($value,$filepath,$password));
+        Storage::disk('public')->delete($name);
         
     }
 }

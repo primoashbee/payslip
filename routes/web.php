@@ -21,16 +21,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    // dd(env('BROADCAST_DRIVER'));
-    // Log::info('message');
-    // event(new TestEvent('sup niggas'));
-    return redirect()->route('home');
-});
-
-Route::get('/ashbee',function(){
-    echo 'pogi si ashbee';
-});
 
 Route::get('/mail',function(){
    $payroll = Payroll::first();
@@ -52,16 +42,26 @@ Route::get('/get/logo',function(){
 })->name('view.logo');
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::post('/home', 'UploadController@upload')->name('upload.payroll');
-// Route::post('/logo.png', function(Request $request){
-//     dd($request->all());
-// });
-Route::get('/dl', 'UploadController@downloadTemplate')->name('download.template');
 
-Route::get('/payrolls', 'PayrollController@list')->name('payroll.list');
-Route::get('/payrolls/{batch_id}', 'PayrollController@listByBatchId')->name('payrolls.batch_id');
-
-Route::get('/payrolls/view/{payroll_id}', 'PayrollController@viewPayroll')->name('view.payslip');
-Route::get('/payrolls/resend/{payroll_id}', 'PayrollController@resendPayroll')->name('view.resend-payslip');
-
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/', function () {
+        // dd(env('BROADCAST_DRIVER'));
+        // Log::info('message');
+        // event(new TestEvent('sup niggas'));
+        return redirect()->route('home');
+    });
+    
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::post('/home', 'UploadController@upload')->name('upload.payroll');
+    // Route::post('/logo.png', function(Request $request){
+    //     dd($request->all());
+    // });
+    Route::get('/dl', 'UploadController@downloadTemplate')->name('download.template');
+    
+    Route::get('/payrolls', 'PayrollController@list')->name('payroll.list');
+    Route::get('/payrolls/{batch_id}', 'PayrollController@listByBatchId')->name('payrolls.batch_id');
+    
+    Route::get('/payrolls/view/{payroll_id}', 'PayrollController@viewPayroll')->name('view.payslip');
+    Route::get('/payrolls/resend/{payroll_id}', 'PayrollController@resendPayroll')->name('view.resend-payslip');
+        
+});

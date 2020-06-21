@@ -270,9 +270,11 @@ class PayrollSendPayslipListen implements ShouldQueue
         $password = uniqid();
 
         $pdf->setEncryption($password);
-        $filepath = Storage::disk('public')->path($value->name.'.pdf');
+        $name = 'PAYSLIP - '.$value->name.' - '.$value->applicable.'.pdf';
+        $filepath = Storage::disk('public')->path($name);
         $pdf->save($filepath);
             
-            Mail::to($value->email)->send(new SendPayslipMail($value,$filepath,$password));
+        Mail::to($value->email)->send(new SendPayslipMail($value,$filepath,$password));
+        Storage::disk('public')->delete($name);
     }
 }
