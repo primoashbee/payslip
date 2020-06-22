@@ -289,7 +289,7 @@ class ListenerPayrollInserted implements ShouldQueue
 
             $pdf->setEncryption($password);
             $name = $value->name.' - '.$value->applicable.'.pdf';
-            $filepath = Storage::disk('public')->path($value->name.' - '.$value->applicable.' .pdf');
+            $filepath = Storage::disk('public')->path($name);
             $pdf->save($filepath);
             
             Mail::to($value->email)->send(new SendPayslipMail($value,$filepath,$password));
