@@ -14,6 +14,8 @@ class SendPayslipMail extends Mailable
     public $payroll;
     public $filepath;
     public $password;
+    
+    public $company_name = 'LIGHT Microfinance Inc.';
 
     public $logo;
 
