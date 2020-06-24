@@ -2,9 +2,10 @@
 
 namespace App;
 
+use Carbon\Carbon;
+use App\Mail\SendPayslipMail;
 use App\Events\EventResendPayslip;
 use App\Events\PayrollSendPayslip;
-use App\Mail\SendPayslipMail;
 use Illuminate\Database\Eloquent\Model;
 
 class Payroll extends Model
@@ -165,6 +166,12 @@ class Payroll extends Model
     public static function batches(){
         $me = new static;
         return $me->select('batch_id','created_at','applicable')->distinct()->get();
+    }
+    public function getSeenAtAttribute($value){
+        if($value==null){
+            return 'Not yet viewed';
+        }
+        return Carbon::parse($value)->isoFormat('MMMM D, YYYY, h:mm:ss a');
     }
 
     public function sendToEmail(){

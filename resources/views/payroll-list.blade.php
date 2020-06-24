@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
+    <div class="row justify-content-center" >
+        <div class="col-md-12"  >
             <div class="card">
                 <div class="card-header">List of Payrolls</div>
 
@@ -30,6 +30,7 @@
                             <th>Gross Pay</th>
                             <th>Net Pay</th>
                             <th>Created At</th>
+                            <th>Viewed At</th>
                             <th>Actions</th>
                         </thead>
                         <tbody>
@@ -49,6 +50,7 @@
                                     {{$payroll->created_at->diffForHumans()}}
                                     </i>
                                 </td>
+                                <td>{{$payroll->seen_at}}</td>
                                 <td>
                                     <a href="{{route('view.resend-payslip',$payroll->id)}}">
                                         <button class="btn btn-danger"><i class="fa fa-share" aria-hidden="true"></i></button>
