@@ -22,10 +22,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-// Route::get('/mail',function(){
-//    $payroll = Payroll::first();
-//    return new SendPayslipMail($payroll,'heyy','ashbee',1);
-// });
+Route::get('/mail',function(){
+   $payroll = Payroll::first();
+   return new SendPayslipMail($payroll,'heyy','ashbee',1);
+});
 
 Route::get('/get/logo',function(){
     // Log::info('email read by '. $payroll_id);
@@ -34,9 +34,11 @@ Route::get('/get/logo',function(){
         Log::info('Loaded: '.$payroll_id);
         
         $p = Payroll::find($payroll_id);
-        $p->seen_at = Carbon::now()->setTimezone('Asia/Singapore');
-        $p->save();
-        return response()->file(public_path('logo.png'));
+        if($p!=null){
+            $p->seen_at = Carbon::now()->setTimezone('Asia/Singapore');
+            $p->save();
+            return response()->file(public_path('logo.png'));
+        }
     }
     
 })->name('view.logo');
