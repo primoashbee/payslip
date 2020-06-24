@@ -20,6 +20,7 @@ class PayrollController extends Controller
         return view('payroll-list',compact('payrolls'));
     }
     public function viewPayroll($payroll_id){
+        
         $logo = public_path('logo.png');
         $value = Payroll::find($payroll_id);
         $signature = public_path('signature.png');
@@ -120,8 +121,8 @@ class PayrollController extends Controller
                                         <td>'.$value->daily_rate.'</td>
                                     </tr>
                                     <tr>
-                                        <td><b>Actual # of days paid</b></td>
-                                        <td>'.$value->days_worked.'</td>
+                                        <td><b>Gross pay for the period </b><i>('.$value->days_worked.' days)</i></td>
+                                        <td><b>'.$value->earned.'</b></td>
                                     </tr>
                                     <tr>
                                         <td>Less: Absences</td>
@@ -176,7 +177,7 @@ class PayrollController extends Controller
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Eb: Rice Subsidy</td>
+                                        <td>EB: Rice Subsidy</td>
                                         <td>'.$value->rice_subsidy.'</td>
                                     </tr>
                                     <tr>
@@ -251,7 +252,7 @@ class PayrollController extends Controller
                                             <p class="title">NET PAY</p>
                                         </td>
                                         <td>
-                                            <p class="title bb">'.$value->net_pay.' ('.$percentage.'%)</p>
+                                            <p class=" bb"><b>'.$value->net_pay.'</b><span style=" font-size:12px !important; padding-bottom: -50px !important">('.$percentage.'%)</span></p>
                                         </td>
                                     </tr>
                                 </tbody>
