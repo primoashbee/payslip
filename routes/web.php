@@ -22,10 +22,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/mail',function(){
-   $payroll = Payroll::first();
-   return new SendPayslipMail($payroll,'heyy','ashbee',1);
-});
+// Route::get('/mail',function(){
+//    $payroll = Payroll::first();
+//    return new SendPayslipMail($payroll,'heyy','ashbee',1);
+// });
 
 Route::get('/get/logo',function(){
     // Log::info('email read by '. $payroll_id);
@@ -57,6 +57,8 @@ Route::group(['middleware' => ['auth']], function () {
     //     dd($request->all());
     // });
     Route::get('/dl', 'UploadController@downloadTemplate')->name('download.template');
+    Route::get('/user', 'UserController@changePassword')->name('changepass');
+    Route::post('/user', 'UserController@updatePassword')->name('update.password');
     
     Route::get('/payrolls', 'PayrollController@list')->name('payroll.list');
     Route::get('/payrolls/{batch_id}', 'PayrollController@listByBatchId')->name('payrolls.batch_id');
