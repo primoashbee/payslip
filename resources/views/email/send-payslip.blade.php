@@ -18,6 +18,6 @@ Finance and Accounting Department <br>
 @endcomponent
 @slot('footer')
     @component('mail::footer')
-        © {{ date('Y') }} {{ $company_name }}. All rights reserved.
+        © {{ date('Y') }} LIGHT Microfinance Inc. All rights reserved.
     @endcomponent
 @endslot
