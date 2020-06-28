@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Payroll extends Model
 {
+    protected $appends = ['percentage'];
     protected $fillable = [
             'email',
             'name',
@@ -38,6 +39,7 @@ class Payroll extends Model
             'taxable_compensation',
             'rice_subsidy',
             'account_payable',
+            'account_payable_remarks',
    
             'other_additions_amount',
             'total_additions',
@@ -50,6 +52,7 @@ class Payroll extends Model
 
 
             'coop_scc',
+            'coop_savings',
             'coop_loans',
             
             'sss_loan',
@@ -57,6 +60,7 @@ class Payroll extends Model
             'hdmf_mp2',
 
             'ar',
+            'ar_remarks',
             
             'total_deductions',
             'net_pay',
@@ -112,6 +116,13 @@ class Payroll extends Model
     public function getAccountPayableAttribute($value){
         return $this->format(number_format($value,2));
     }
+    public function getAccountPayableRemarksAttribute($value){
+        if($value==null || $value==""){
+            return '-';
+        }
+        return $value;
+    
+    }
 
     public function getGrossPayAttribute($value){
         return $this->format(number_format($value,2));
@@ -135,6 +146,9 @@ class Payroll extends Model
     public function getCoopSccAttribute($value){
         return $this->format(number_format($value,2));
     }
+    public function getCoopSavingsAttribute($value){
+        return $this->format(number_format($value,2));
+    }
 
     public function getCoopLoansAttribute($value){
         return $this->format(number_format($value,2));
@@ -150,6 +164,12 @@ class Payroll extends Model
 
     public function getArAttribute($value){
         return $this->format(number_format($value,2));
+    }
+    public function getArRemarksAttribute($value){
+        if($value==null || $value==""){
+            return '-';
+        }
+        return $value;
     }
 
     public function getTotalDeductionsAttribute($value){
@@ -172,6 +192,9 @@ class Payroll extends Model
             return 'Not yet viewed';
         }
         return Carbon::parse($value)->isoFormat('MMMM D, YYYY, h:mm:ss a');
+    }
+    public function getPercentageAttribute(){
+        return round($this->getRawOriginal('net_pay') / $this->getRawOriginal('gross_compensation'),2) * 100  .'%';
     }
 
     public function sendToEmail(){

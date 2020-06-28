@@ -46,6 +46,17 @@ Auth::routes();
 
 
 Route::group(['middleware' => ['auth']], function () {
+    Route::get('/pdf/{id}',function($id){
+        $value = Payroll::find($id);
+        $logo = public_path('logo.png');
+        $signature = public_path('signature.png');
+        // return view('payslip',compact('value','logo','signature'));
+        $pdf = PDF::loadView('payslip', compact('value','logo','signature'));
+        $customPaper = array(0,0,360,1030);
+        
+        $pdf->setPaper($customPaper);
+        return $pdf->stream();
+    });
     Route::get('/', function () {
         // dd(env('BROADCAST_DRIVER'));
         // Log::info('message');

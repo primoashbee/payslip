@@ -39,6 +39,7 @@ class CreatePayrollsTable extends Migration
             
             $table->float('rice_subsidy')->nullable();
             $table->float('account_payable')->nullable();
+            $table->string('account_payable_remarks')->nullable();
             $table->string('other')->nullable();
             $table->float('other_additions_amount')->nullable();
             $table->float('total_additions')->nullable();
@@ -51,6 +52,7 @@ class CreatePayrollsTable extends Migration
             $table->float('hdmf_contribution')->nullable();
 
             $table->float('coop_scc')->nullable();
+            $table->float('coop_savings')->nullable();
             $table->float('coop_loans')->nullable();
 
             $table->float('sss_loan')->nullable();
@@ -59,6 +61,8 @@ class CreatePayrollsTable extends Migration
             
             
             $table->float('ar')->nullable();
+            $table->string('ar_remarks')->nullable();
+
             $table->float('total_deductions')->nullable();
             $table->float('net_pay')->nullable();
             $table->integer('date_received')->nullable();

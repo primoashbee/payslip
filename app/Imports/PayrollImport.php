@@ -27,6 +27,7 @@ class PayrollImport implements ToModel, WithHeadingRow,WithCalculatedFormulas, W
     public function model(array $row)
     {
         
+        
         if($this->ctr == 0){
             
             $this->start_date = Carbon::parse(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['start_date']));
@@ -63,8 +64,9 @@ class PayrollImport implements ToModel, WithHeadingRow,WithCalculatedFormulas, W
             'taxable_compensation' => $row['taxable_compensation'],
             'rice_subsidy' => $row['rice_subsidy'],
             'account_payable' => $row['ap'],
+            'account_payable_remarks' => $row['ap_remarks'],
             
-            'other_additions_amount' => $row['othersremarks_addition_amount'],
+            // 'other_additions_amount' => $row['othersremarks_addition_amount'],
             'total_additions' => $row['additions'],
             'gross_pay' => $row['gross_pay'],
             
@@ -74,6 +76,7 @@ class PayrollImport implements ToModel, WithHeadingRow,WithCalculatedFormulas, W
             'hdmf_contribution' => $row['hdmf_contribution'],
 
             'coop_scc' => $row['coop_scc'],
+            'coop_savings' => $row['coop_savings'],
             'coop_loans' => $row['coop_loans'],
             
 
@@ -82,6 +85,7 @@ class PayrollImport implements ToModel, WithHeadingRow,WithCalculatedFormulas, W
             'hdmf_mp2' => $row['hdmf_mp2'],
             
             'ar'=>$row['ar'],
+            'ar_remarks'=>$row['remarks'],
 
             'total_deductions' => $row['total_deductions'],
             'net_pay' => $row['net_pay'],
@@ -125,8 +129,9 @@ class PayrollImport implements ToModel, WithHeadingRow,WithCalculatedFormulas, W
              'taxable_compensation' => 'required|gte:0',
              'rice_subsidy' => 'sometimes|gte:0',
              'ap' => 'sometimes|gte:0',
+             'ap_remarks' => 'sometimes',
 
-             'othersremarks_addition_amount' => 'sometimes|gte:0',
+            //  'othersremarks_addition_amount' => 'sometimes|gte:0',
 
              'additions' => 'sometimes|gte:0',
 
@@ -140,6 +145,7 @@ class PayrollImport implements ToModel, WithHeadingRow,WithCalculatedFormulas, W
 
                           
              'coop_scc' => 'sometimes|gte:0',
+             'coop_savings' => 'sometimes|gte:0',
              'coop_loans' => 'sometimes|gte:0',
 
              'sss_loan' => 'sometimes|gte:0',
@@ -148,6 +154,7 @@ class PayrollImport implements ToModel, WithHeadingRow,WithCalculatedFormulas, W
              'hdmf_mp2' => 'sometimes|gte:0',
              
              'ar' => 'sometimes|gte:0',
+
              'total_deductions' => 'sometimes|gte:0',
              'net_pay' => 'required|gte:0',
 
@@ -199,9 +206,10 @@ class PayrollImport implements ToModel, WithHeadingRow,WithCalculatedFormulas, W
             'rice_subsidy.gte' => 'Rice subsidy must be greater than or equal to 0',
 
             'ap.gte' => 'Account Payable must be greater than or equal to 0',
+            
 
             
-            'othersremarks_addition_amount.gte' => 'Others/Remarks Addition amount must be greater than or equal to 0',
+            // 'othersremarks_addition_amount.gte' => 'Others/Remarks Addition amount must be greater than or equal to 0',
 
             'additions.gte' => 'Additions must be greater than or equal to 0',
             

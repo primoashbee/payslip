@@ -15,7 +15,9 @@ class UploadController extends Controller
         $headers = array(
             'Content-Type: application/pdf',
           );
-        return response()->download(public_path('Template.xlsx'));
+        
+        
+        return response()->download(public_path('Template V2.xlsx'));
     }
 
     public function upload(Request $request){

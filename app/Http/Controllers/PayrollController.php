@@ -26,6 +26,7 @@ class PayrollController extends Controller
         $signature = public_path('signature.png');
         $pdf = app()->make('dompdf.wrapper');
         $percentage = round($value->getRawOriginal('net_pay') / $value->getRawOriginal('gross_compensation'),2) * 100;
+        
         $pdf->loadHTML('
                 <!DOCTYPE html>
                 <html>
@@ -38,22 +39,23 @@ class PayrollController extends Controller
                     max-width: 400px;
                     width: 100%;
                     border: 1px solid black;
-                    height: 1150px;
+                    height: 1300px;
                     border-style: dashed;
                     }
                     div.slip-body{
                         display: flex;
+                        padding-bottom:50px;
                     }
                     div.slip-header{
                         width: 100%;
-                        border-bottom: 2px solid black;
+                        border-bottom: 2x solid black;
                         border-bottom-style: dashed;
                     }
                     div.slip-footer{
-                        margin-top: -30px;
+                        margin-top:-50px !important;
                         margin-left: 5px;
                     }
-                    .m-0{
+                    .m0{
                         margin: 0;
                         
                     }
@@ -181,7 +183,7 @@ class PayrollController extends Controller
                                         <td>'.$value->rice_subsidy.'</td>
                                     </tr>
                                     <tr>
-                                        <td>Accounts Payable</td>
+                                        <td>AP: '.$value->account_payable_remarks.'</td>
                                         <td class="bb">'.$value->account_payable.'</td>
                                     </tr>
                                     <tr>
@@ -220,6 +222,10 @@ class PayrollController extends Controller
                                         <td>'.$value->coop_scc.'</td>
                                     </tr>
                                     <tr>
+                                        <td>A/P: Coop Savings</td>
+                                        <td>'.$value->coop_savings.'</td>
+                                    </tr>
+                                    <tr>
                                         <td>A/P: Coop Loans</td>
                                         <td>'.$value->coop_loans.'</td>
                                     </tr>
@@ -236,7 +242,7 @@ class PayrollController extends Controller
                                         <td>'.$value->hdmf_mp2.'</td>
                                     </tr>
                                     <tr>
-                                        <td>Account Receivable</td>
+                                        <td>AR: '.$value->ar_remarks.'</td>
                                         <td>'.$value->ar.'</td>
                                     </tr>
                                     <tr>
@@ -258,22 +264,24 @@ class PayrollController extends Controller
                                 </tbody>
                                     
                             </table>
+
+
                         </div>
 
                         <div class="slip-footer">
-                            <br>
-                            <br>
                             <h4 class="m0">Prepared by:</h4>
-                            <img src="'.$signature.'" style="max-width:50%;max-height:50%;padding-bottom:-20px">
-                            <p><b>Annalie D. Conception</b></p>
-                            <p style="margin-top:-15px"><i>Unit Head - General Accounting</i></p>
+                            <img src="'.$signature.'" style="">
+                            <p style="margin-top:-10px"><b>Annalie D. Conception</b>
+                            <br> <i>Unit Head - General Accounting</i></p>
                         </div>
+
                     </div>
 
                 </body>
                 </html>'
         );
-        $customPaper = array(0,0,360,950);
+        $customPaper = array(0,0,360,1100);
+        
         $pdf->setPaper($customPaper);
         return $pdf->stream();
 
