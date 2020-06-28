@@ -16,11 +16,14 @@ class isAdmin
      */
     public function handle($request, Closure $next)
     {
-        if(auth()->user()->is_admin){
-            
-        }else{
-            return redirect(RouteServiceProvider::HOME);
+        if(auth()->check()){
+            if(auth()->user()->is_admin){
+                return $next($request);
+            }
         }
-        return $next($request);
+        return redirect(RouteServiceProvider::HOME);
+        
+        
+        
     }
 }
