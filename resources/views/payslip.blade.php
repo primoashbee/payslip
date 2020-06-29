@@ -246,7 +246,7 @@
 
         <div class="slip-footer">
             <h4 class="m0">Prepared by:</h4>
-            <div style="margin-top:15px">
+            <div style="margin-top:10px">
                 <img src="{{$signature}}" style="margin-left:35px;" >
                 <p style="margin-top:-10px"><b>Annalie D. Conception</b>
                 <br> <i>Unit Head - General Accounting</i></p>
