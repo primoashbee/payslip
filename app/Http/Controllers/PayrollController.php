@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Payroll;
+use PDF;
 use Illuminate\Http\Request;
 
 class PayrollController extends Controller
@@ -23,6 +24,7 @@ class PayrollController extends Controller
         
         $value = Payroll::find($payroll_id);
         $percentage = round($value->getRawOriginal('net_pay') / $value->getRawOriginal('gross_compensation'),2) * 100;
+
         $logo = public_path('logo.png');
         $signature = public_path('signature.png');
         $pdf = PDF::loadView('payslip', compact('value','logo','signature'));
