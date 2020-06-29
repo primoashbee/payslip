@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\User;
 use Carbon\Carbon;
 use App\Mail\SendPayslipMail;
 use App\Events\EventResendPayslip;
@@ -65,7 +66,8 @@ class Payroll extends Model
             'total_deductions',
             'net_pay',
             'date_received',
-            'batch_id'
+            'batch_id',
+            'user_id'
     ];
 
     public function format($value){
@@ -185,7 +187,7 @@ class Payroll extends Model
 
     public static function batches(){
         $me = new static;
-        return $me->select('batch_id','created_at','applicable')->distinct()->get();
+        return $me->select('batch_id','created_at','applicable','user_id')->distinct()->get();
     }
     public function getSeenAtAttribute($value){
         if($value==null){
@@ -201,6 +203,10 @@ class Payroll extends Model
         $payroll = $this;
         
         event(new EventResendPayslip($payroll));
+        
+    }
+    public function user(){
+        return $this->belongsTo(User::class);
         
     }
 

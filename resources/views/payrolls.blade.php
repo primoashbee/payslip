@@ -28,6 +28,7 @@
                             <th>Batch ID</th>
                             <th>Covers</th>
                             <th>Uploaded At</th>
+                            <th>Uploaded By</th>
                             <th>Actions</th>
                         </thead>
                         <tbody>
@@ -43,6 +44,9 @@
                                     <i> 
                                     {{$payroll->created_at->diffForHumans()}}
                                     </i>
+                                </td>
+                                <td>
+                                    {{$payroll->user->name}}
                                 </td>
                                 <td>
                                     <a href="{{route('payrolls.batch_id',$payroll->batch_id)}}">View</a>

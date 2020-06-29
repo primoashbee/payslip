@@ -19,7 +19,7 @@ class PayrollImport implements ToModel, WithHeadingRow,WithCalculatedFormulas, W
     public $end_date;
     public $ctr = 0;
     public $batch_id;
-
+    public $user_id;
     public function __construct($batch_id){
         $this->batch_id = $batch_id;
     }
@@ -32,7 +32,7 @@ class PayrollImport implements ToModel, WithHeadingRow,WithCalculatedFormulas, W
             
             $this->start_date = Carbon::parse(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['start_date']));
             $this->end_date = Carbon::parse(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['end_date']));
-            
+            $this->user_id = auth()->user()->id;
         }
         
         $this->ctr++;
@@ -94,6 +94,7 @@ class PayrollImport implements ToModel, WithHeadingRow,WithCalculatedFormulas, W
             'start_date' => $this->start_date,
             'cut_off_date' =>$this->end_date,
             'batch_id' => $this->batch_id,
+            'user_id' => $this->user_id,
         ]);
         
     }
