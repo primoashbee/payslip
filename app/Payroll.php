@@ -114,6 +114,9 @@ class Payroll extends Model
     public function getTaxableCompensationAttribute($value){
         return $this->format(number_format($value,2));
     }
+    public function getWithholdingTaxAttribute($value){
+        return $this->format(number_format($value,2));
+    }
 
     public function getAccountPayableAttribute($value){
         return $this->format(number_format($value,2));
