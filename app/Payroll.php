@@ -119,11 +119,7 @@ class Payroll extends Model
     }
 
     public function getAccountPayableAttribute($value){
-        // return $this->format(number_format($value,2));
-        if($value==null || $value=="" || $value==0){
-            return '-';
-        }
-        return $value;
+        return $this->format(number_format($value,2));
     }
     public function getAccountPayableRemarksAttribute($value){
         if($value==null || $value=="" || $value==0){
@@ -172,14 +168,10 @@ class Payroll extends Model
     }
 
     public function getArAttribute($value){
-        // return $this->format(number_format($value,2));
-        if($value==null || $value=="" || $value==0){
-            return '-';
-        }
-        return $value;
+        return $this->format(number_format($value,2));
     }
     public function getArRemarksAttribute($value){
-        if($value==null || $value=="" || $value==0){
+        if($value==null || $value==""){
             return '-';
         }
         return $value;
