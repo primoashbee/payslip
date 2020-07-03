@@ -196,7 +196,7 @@ class Payroll extends Model
         return Carbon::parse($value)->isoFormat('MMMM D, YYYY, h:mm:ss a');
     }
     public function getPercentageAttribute(){
-        return round($this->getRawOriginal('net_pay') / $this->getRawOriginal('gross_compensation'),2) * 100  .'%';
+        return round($this->getRawOriginal('net_pay') / $this->getRawOriginal('gross_pay'),2) * 100  .'%';
     }
 
     public function sendToEmail(){
