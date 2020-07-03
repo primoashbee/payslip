@@ -184,6 +184,7 @@ class PayrollImport implements ToModel, WithHeadingRow,WithCalculatedFormulas, W
             'absent_amount.gte' => 'Days Amount must be greater than or equal to 0',
 
             'in_mins.gte' => 'Tardiness in minutes Amount must be greater than or equal to 0',
+            'tardiness_amount.gte' => 'Tardiness Amount must be greater than or equal to 0',
 
             
             'retro.gte' => 'Retro Adjustment  must be greater than or equal to 0',
