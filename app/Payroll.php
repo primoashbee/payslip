@@ -171,7 +171,7 @@ class Payroll extends Model
         return $this->format(number_format($value,2));
     }
     public function getArRemarksAttribute($value){
-        if($value==null || $value==""){
+        if($value==null || $value=="" || $value==0){
             return '-';
         }
         return $value;
