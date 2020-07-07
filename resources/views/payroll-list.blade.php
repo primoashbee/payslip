@@ -8,6 +8,7 @@
                 <div class="card-header">List of Payrolls</div>
 
                 <div class="card-body">
+                    
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
@@ -26,6 +27,7 @@
                         <thead>
                             <th>#</th>
                             <th>Email</th>
+                            <th>Covers</th>
                             <th>Name</th>
                             <th>Gross Pay</th>
                             <th>Net Pay</th>
@@ -40,6 +42,7 @@
                             <tr>
                                 <td>{{$ctr}}</td>
                                 <td>{{$payroll->email}}</td>
+                                <td>{{$payroll->applicable}}</td>
                                 <td>{{$payroll->name}}</td>
                                 <td>{{$payroll->gross_pay}}</td>
                                 <td>{{$payroll->net_pay}}</td>
