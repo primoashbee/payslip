@@ -23,6 +23,7 @@
                             </ul>
                         </div>
                     @endif
+                    <a href="{{request()->url()}}?print=true"><button class="btn btn-primary float-right mb-2">Export</button></a>
                     <table class="table">
                         <thead>
                             <th>#</th>
