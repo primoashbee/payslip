@@ -205,8 +205,7 @@ class Payroll extends Model
     }
 
     public function sendToEmail(){
-        $payroll = $this;
-        
+        $payroll = $this;   
         event(new EventResendPayslip($payroll));
         
     }

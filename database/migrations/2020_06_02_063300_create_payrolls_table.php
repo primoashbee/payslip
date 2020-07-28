@@ -20,51 +20,51 @@ class CreatePayrollsTable extends Migration
             $table->string('position')->nullable();
             $table->string('employement')->nullable();
             $table->string('applicable')->nullable();
-            $table->float('monthly_rate')->nullable();
-            $table->float('daily_rate')->nullable();
+            $table->double('monthly_rate')->nullable();
+            $table->double('daily_rate')->nullable();
             $table->integer('days_worked')->nullable();
-            $table->float('earned')->nullable();
+            $table->double('earned')->nullable();
             $table->integer('days_absent')->nullable();
-            $table->float('days_absent_amount')->nullable();
+            $table->double('days_absent_amount')->nullable();
             $table->integer('minutes_tardiness')->nullable();
-            $table->float('minutes_tardiness_amount')->nullable();
-            $table->float('retro')->nullable();
+            $table->double('minutes_tardiness_amount')->nullable();
+            $table->double('retro')->nullable();
             
-            $table->float('gross_compensation')->nullable();
+            $table->double('gross_compensation')->nullable();
             $table->integer('addtional_holiday')->nullable();
-            $table->float('addtional_holiday_amount')->nullable();
-            $table->float('overtime_amount')->nullable();
+            $table->double('addtional_holiday_amount')->nullable();
+            $table->double('overtime_amount')->nullable();
             
-            $table->float('taxable_compensation')->nullable();
+            $table->double('taxable_compensation')->nullable();
             
-            $table->float('rice_subsidy')->nullable();
-            $table->float('account_payable')->nullable();
+            $table->double('rice_subsidy')->nullable();
+            $table->double('account_payable')->nullable();
             $table->string('account_payable_remarks')->nullable();
             $table->string('other')->nullable();
-            $table->float('other_additions_amount')->nullable();
-            $table->float('total_additions')->nullable();
+            $table->double('other_additions_amount')->nullable();
+            $table->double('total_additions')->nullable();
             
-            $table->float('gross_pay')->nullable();
+            $table->double('gross_pay')->nullable();
 
-            $table->float('withholding_tax')->nullable();
-            $table->float('sss_contribution')->nullable();
-            $table->float('phic_contribution')->nullable();
-            $table->float('hdmf_contribution')->nullable();
+            $table->double('withholding_tax')->nullable();
+            $table->double('sss_contribution')->nullable();
+            $table->double('phic_contribution')->nullable();
+            $table->double('hdmf_contribution')->nullable();
 
-            $table->float('coop_scc')->nullable();
-            $table->float('coop_savings')->nullable();
-            $table->float('coop_loans')->nullable();
+            $table->double('coop_scc')->nullable();
+            $table->double('coop_savings')->nullable();
+            $table->double('coop_loans')->nullable();
 
-            $table->float('sss_loan')->nullable();
-            $table->float('hdmf_loan')->nullable();
-            $table->float('hdmf_mp2')->nullable();
+            $table->double('sss_loan')->nullable();
+            $table->double('hdmf_loan')->nullable();
+            $table->double('hdmf_mp2')->nullable();
             
             
-            $table->float('ar')->nullable();
+            $table->double('ar')->nullable();
             $table->string('ar_remarks')->nullable();
 
-            $table->float('total_deductions')->nullable();
-            $table->float('net_pay')->nullable();
+            $table->double('total_deductions')->nullable();
+            $table->double('net_pay')->nullable();
             $table->integer('date_received')->nullable();
             $table->date('start_date')->nullable();
             $table->date('cut_off_date')->nullable();
