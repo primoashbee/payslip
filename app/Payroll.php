@@ -69,7 +69,6 @@ class Payroll extends Model
             'batch_id',
             'user_id'
     ];
-
     public function format($value){
         return '' . $value;
     }
