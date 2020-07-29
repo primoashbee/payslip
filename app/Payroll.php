@@ -139,6 +139,10 @@ class Payroll extends Model
         return $this->format(number_format($value,2));
     }
 
+    public function getSssLoanAttribute($value){
+        return $this->format(number_format($value,2));
+    }
+
     public function getPhicContributionAttribute($value){
         return $this->format(number_format($value,2));
     }
