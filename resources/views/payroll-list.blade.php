@@ -23,7 +23,15 @@
                             </ul>
                         </div>
                     @endif
-                    <a href="{{request()->url()}}?print=true"><button class="btn btn-primary float-right mb-2">Export</button></a>
+                    
+                    <div class="float-right">
+                        <a href="{{route('view.resend-batch-payslip',request()->batch_id)}}">
+                            <button class="btn btn-primary mb-2">Resend All</button>
+                        </a> 
+                        <a href="{{request()->url()}}?print=true" >
+                            <button class="btn btn-primary  mb-2">Export</button>
+                        </a>
+                    </div>
                     <table class="table">
                         <thead>
                             <th>#</th>

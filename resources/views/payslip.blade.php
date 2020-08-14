@@ -10,7 +10,7 @@
     max-width: 400px;
     width: 100%;
     border: 1px solid black;
-    height: 1250px;
+    height: 1300px;
     border-style: dashed;
     }
     div.slip-body{

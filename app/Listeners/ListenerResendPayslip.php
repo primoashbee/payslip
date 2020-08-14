@@ -35,7 +35,7 @@ class ListenerResendPayslip implements ShouldQueue
         $signature = public_path('signature.png');
         
         $pdf = PDF::loadView('payslip', compact('value','logo','signature'));
-        $customPaper = array(0,0,360,1030);
+        $customPaper = array(0,0,360,1090);
         $pdf->setPaper($customPaper);
         
         $password = uniqid();

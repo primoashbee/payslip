@@ -5,7 +5,9 @@ namespace App\Providers;
 use App\Events\EventPayrollInserted;
 use App\Events\EventResendPayslip;
 use App\Events\PayrollSendPayslip;
+use App\Events\ResendBatchPayroll;
 use App\Listeners\ListenerPayrollInserted;
+use App\Listeners\ListenerResendBatchPayslip;
 use App\Listeners\ListenerResendPayslip;
 use App\Listeners\PayrollSendPayslipListen;
 use Illuminate\Auth\Events\Registered;
@@ -29,6 +31,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         EventResendPayslip::class => [
             ListenerResendPayslip::class,
+        ],
+        ResendBatchPayroll::class => [
+            ListenerResendBatchPayslip::class,
         ]
     ];
 

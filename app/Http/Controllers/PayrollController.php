@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ResendBatchPayroll;
 use PDF;
 use App\Payroll;
 use Illuminate\Http\Request;
@@ -38,7 +39,7 @@ class PayrollController extends Controller
         $logo = public_path('logo.png');
         $signature = public_path('signature.png');
         $pdf = PDF::loadView('payslip', compact('value','logo','signature'));
-        $customPaper = array(0,0,360,1030);
+        $customPaper = array(0,0,360,1090);
         $pdf->setPaper($customPaper);
         
         $pdf->setPaper($customPaper);
@@ -54,6 +55,12 @@ class PayrollController extends Controller
 
         return redirect()->back()->with('status','Payslip succesfully sent to '. $payslip->email);
 
+    }
+    public function resendBatchPayroll($batch_id){
+        $list = Payroll::whereBatchId($batch_id)->get();
+        if($list->count() > 0){
+            event(new ResendBatchPayroll($batch_id));
+        }
     }
 
     public function makePayrollList($batch_id){

@@ -39,7 +39,7 @@ class ListenerPayrollInserted implements ShouldQueue
             $logo = public_path('logo.png');
             $signature = public_path('signature.png');
             $pdf = PDF::loadView('payslip', compact('value','logo','signature'));
-            $customPaper = array(0,0,360,1030);
+            $customPaper = array(0,0,360,1090);
             $pdf->setPaper($customPaper);
             
             $password = str_shuffle(uniqid());
