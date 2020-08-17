@@ -16,7 +16,6 @@ class PayrollController extends Controller
 
     public function list(){
         $payrolls = Payroll::batches();
-
         return view('payrolls',compact('payrolls'));
     }
     public function listByBatchId(Request $request, $batch_id){

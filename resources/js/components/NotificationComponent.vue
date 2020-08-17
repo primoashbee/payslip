@@ -10,7 +10,6 @@ import Pusher from 'pusher-js' // import Pusher
     export default {
         mounted() {
             this.subscribe()
-            alert('hey');
         },
         methods: {
             subscribe(){
