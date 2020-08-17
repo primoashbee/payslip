@@ -30,8 +30,10 @@ class ListenerResendBatchPayslip implements ShouldQueue
         $lists  = $event->list;
         $ctr=0;
         foreach($lists as $list){
-            $list->sendToEmail();
-            $ctr++;
+            if (!id_null($list->seen_at)) {
+                $list->sendToEmail();
+                $ctr++;
+            }
         }
         if($ctr == $lists->count()){
             Log::info('Success: ' . $ctr . ' / ' . $lists->count());
