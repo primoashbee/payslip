@@ -30,7 +30,7 @@ class ListenerResendBatchPayslip implements ShouldQueue
         $lists  = $event->list;
         $ctr=0;
         foreach($lists as $list){
-            if (!id_null($list->seen_at)) {
+            if (!is_null($list->seen_at)) {
                 $list->sendToEmail();
                 $ctr++;
             }
