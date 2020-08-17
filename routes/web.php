@@ -80,4 +80,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/payrolls/resend/{payroll_id}', 'PayrollController@resendPayroll')->name('view.resend-payslip');
     Route::get('/payrolls/resend/batch/{batch_id}', 'PayrollController@resendBatchPayroll')->name('view.resend-batch-payslip');
         
+    
 });
+// Route::get('/ws',function(){
+//     event(new PayrollUploadSuccess('Wassup niggas'));
+// });

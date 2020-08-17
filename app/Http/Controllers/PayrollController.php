@@ -58,9 +58,12 @@ class PayrollController extends Controller
     }
     public function resendBatchPayroll($batch_id){
         $list = Payroll::whereBatchId($batch_id)->get();
+        $msg="";
         if($list->count() > 0){
             event(new ResendBatchPayroll($batch_id));
+            $msg = "Succesfully resent to all emails on this batch [" . $batch_id . "]";
         }
+        return redirect()->back()->with('status',$msg);
     }
 
     public function makePayrollList($batch_id){
