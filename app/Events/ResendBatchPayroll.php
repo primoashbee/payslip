@@ -13,7 +13,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ResendBatchPayroll implements ShouldBroadcast
+class ResendBatchPayroll 
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -25,7 +25,9 @@ class ResendBatchPayroll implements ShouldBroadcast
     public $list;
     public function __construct($list)
     {
-        $list = Payroll::whereBatchId($list)->get();
+        $list = Payroll::whereBatchId($list)->where('seen_at',null)->get('id');
+        // $list = Payroll::whereBatchId($list)->get('id');
+        // $list = Payroll::limit(100)->get('id');
         $this->list = $list;
     }
 
@@ -34,12 +36,15 @@ class ResendBatchPayroll implements ShouldBroadcast
      *
      * @return \Illuminate\Broadcasting\Channel|array
      */
-    public function broadcastOn()
-    {
-        return ('channel-notifcations');
-    }
-    public function broadcastAs()
-    {
-        return 'event-resend-batch';
-    }
+    // public function broadcastOn()
+    // {
+    //     return ('channel-notifcations');
+    // }
+    // public function broadcastAs()
+    // {
+    //     return 'event-resend-batch';
+    // }
+    // public function broadcastWith(){
+    //     return ['clients'=>$this->list];
+    // }
 }
