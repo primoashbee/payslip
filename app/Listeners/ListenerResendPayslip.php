@@ -45,7 +45,11 @@ class ListenerResendPayslip implements ShouldQueue
         $filepath = Storage::disk('public')->path($name);
         
         $pdf->save($filepath);
-        Mail::to($value->email)->send(new SendPayslipMail($value,$filepath,$password));
+        if (env('APP_MAIL_DEV')) {
+            Mail::to('payslip@light.org.ph')->send(new SendPayslipMail($value, $filepath, $password));
+        }else{
+            Mail::to($value->email)->send(new SendPayslipMail($value, $filepath, $password));
+        }
         Storage::disk('public')->delete($name);
         
     }
