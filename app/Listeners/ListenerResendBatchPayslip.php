@@ -39,6 +39,9 @@ class ListenerResendBatchPayslip implements ShouldQueue
             $list->sendToEmail();
             $ctr++;
         }
+
+        event(new PayrollUploadSuccess('Success: ' . $ctr . ' / ' . $lists->count()));
+
         if($ctr == $lists->count()){
             Log::info('Success: ' . $ctr . ' / ' . $lists->count());
         }else{
