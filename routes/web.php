@@ -35,6 +35,9 @@ Route::get('/get/logo',function(){
         
         $p = Payroll::find($payroll_id);
         if($p!=null){
+            if($p->seen_at=!null){
+                return response()->file(public_path('logo.png'));
+            }
             $p->seen_at = Carbon::now()->setTimezone('Asia/Singapore');
             $p->save();
             return response()->file(public_path('logo.png'));
