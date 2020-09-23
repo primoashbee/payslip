@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use Illuminate\Support\Facades\Log;
+use App\Events\PayrollUploadSuccess;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -29,12 +30,7 @@ class ListenerResendBatchPayslip implements ShouldQueue
     {
         $lists  = $event->list;
         $ctr=0;
-        // foreach($lists as $list){
-        //     if ($list->seen_at=="Not yet viewed") {
-        //         $list->sendToEmail();
-        //         $ctr++;
-        //     }
-        // }
+
         foreach($lists as $list){
             $list->sendToEmail();
             $ctr++;
