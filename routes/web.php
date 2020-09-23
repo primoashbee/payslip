@@ -32,17 +32,20 @@ Route::get('/get/logo',function(){
     $payroll_id = request()->get('id');
     if($payroll_id!=null){
         Log::info('Loaded: '.$payroll_id);
-        
         $p = Payroll::find($payroll_id);
+        
         if($p!=null){
-            if($p->seen_at=!null){
+            
+            if($p->getRawOriginal('seen_at') != null){
                 return response()->file(public_path('logo.png'));
             }
+            
             $p->seen_at = Carbon::now()->setTimezone('Asia/Singapore');
             $p->save();
             return response()->file(public_path('logo.png'));
         }
     }
+    return response()->file(public_path('logo.png'));
     
 })->name('view.logo');
 Auth::routes();
