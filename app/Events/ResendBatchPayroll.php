@@ -25,8 +25,8 @@ class ResendBatchPayroll
     public $list;
     public function __construct($list)
     {
-        // $list = Payroll::whereBatchId($list)->where('seen_at',null)->get('id');
-        $list = Payroll::whereBatchId($list)->get('id');
+        $list = Payroll::whereBatchId($list)->where('seen_at',null)->get('id');
+        // $list = Payroll::whereBatchId($list)->get('id');
         // $list = Payroll::limit(100)->get('id');
         $this->list = $list;
     }
