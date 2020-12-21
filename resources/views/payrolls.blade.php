@@ -27,7 +27,6 @@
                             <th>#</th>
                             <th>Batch ID</th>
                             <th>Covers</th>
-                            <th>Uploaded At</th>
                             <th>Uploaded By</th>
                             <th>Actions</th>
                         </thead>
@@ -39,12 +38,6 @@
                                 <td>{{$ctr}}</td>
                                 <td>{{$payroll->batch_id}}</td>
                                 <td>{{$payroll->applicable}}</td>
-                                <td>
-                                    {{$payroll->created_at->format('F d, Y')}},     
-                                    <i> 
-                                    {{$payroll->created_at->diffForHumans()}}
-                                    </i>
-                                </td>
                                 <td>
                                     {{$payroll->user->name}}
                                 </td>

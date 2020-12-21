@@ -195,7 +195,7 @@ class Payroll extends Model
 
     public static function batches(){
         $me = new static;
-        return $me->select('batch_id','created_at','applicable','user_id')->distinct()->get();
+        return $me->select('batch_id','applicable','user_id')->distinct()->get();
     }
     public function getSeenAtAttribute($value){
         if($value==null){
