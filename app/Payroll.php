@@ -33,8 +33,8 @@ class Payroll extends Model
             'retro',
                 
 
-            'addtional_holiday',
-            'addtional_holiday_amount',
+            'additional_holiday',
+            'additional_holiday_amount',
 
             'overtime_amount',
             'taxable_compensation',

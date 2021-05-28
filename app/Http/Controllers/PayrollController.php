@@ -37,6 +37,7 @@ class PayrollController extends Controller
 
         $logo = public_path('logo.png');
         $signature = public_path('signature.png');
+        // return view('payslip', compact('value','logo','signature'));
         $pdf = PDF::loadView('payslip', compact('value','logo','signature'));
         $customPaper = array(0,0,360,1090);
         $pdf->setPaper($customPaper);

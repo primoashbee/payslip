@@ -57,8 +57,8 @@ class PayrollImport implements ToModel, WithHeadingRow,WithCalculatedFormulas, W
             'retro' => $row['retro'],
             'gross_compensation' => $row['gross_compensation'],
 
-            'addtional_holiday' => $row['no_of_days'],
-            'addtional_holiday_amount' => $row['holiday_amount'],
+            'additional_holiday' => $row['no_of_days'],
+            'additional_holiday_amount' => $row['holiday_amount'],
 
             'overtime_amount' => $row['overtime_pay'],
             'taxable_compensation' => $row['taxable_compensation'],

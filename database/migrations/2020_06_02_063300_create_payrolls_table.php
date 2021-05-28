@@ -31,8 +31,8 @@ class CreatePayrollsTable extends Migration
             $table->double('retro')->nullable();
             
             $table->double('gross_compensation')->nullable();
-            $table->integer('addtional_holiday')->nullable();
-            $table->double('addtional_holiday_amount')->nullable();
+            $table->integer('additional_holiday')->nullable();
+            $table->double('additional_holiday_amount')->nullable();
             $table->double('overtime_amount')->nullable();
             
             $table->double('taxable_compensation')->nullable();
